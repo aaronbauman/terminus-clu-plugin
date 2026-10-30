@@ -9,7 +9,7 @@ class BitbucketProvider extends BuildToolsBitbucketProvider implements GitProvid
 
   public function cloneRepository($target_project, $destination) {
     $password = urlencode($this->getBitBucketPassword());
-    $remote_url = "https://x-token-auth:${password}@bitbucket.org/${target_project}.git";
+    $remote_url = "https://x-bitbucket-api-token-auth:${password}@bitbucket.org/${target_project}.git";
     $this->execWithRedaction("git clone {remote} $destination", ['remote' => $remote_url], ['remote' => $target_project]);
   }
 
