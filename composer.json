@@ -1,7 +1,7 @@
 {
-  "name": "pantheon-systems/terminus-clu-plugin",
+  "name": "aaronbauman/terminus-clu-plugin",
   "description": "Terminus plugin for updating Composer dependencies",
-  "homepage": "https://github.com/pantheon-systems/terminus-clu-plugin",
+  "homepage": "https://github.com/aaronbauman/terminus-clu-plugin",
   "authors": [
     {
       "name": "Aaron Bauman",
