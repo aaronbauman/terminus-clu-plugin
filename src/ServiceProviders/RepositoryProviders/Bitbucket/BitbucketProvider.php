@@ -8,20 +8,9 @@ use Pantheon\TerminusClu\ServiceProviders\RepositoryProviders\GitProvider;
 class BitbucketProvider extends BuildToolsBitbucketProvider implements GitProvider {
 
   public function cloneRepository($target_project, $destination) {
-    // Prefer SSH when available; fall back to HTTPS with the fixed
-    // token-auth username (the Atlassian email in BITBUCKET_USER
-    // doesn't work for git over HTTPS with API tokens).
-    exec('ssh -o BatchMode=yes -o ConnectTimeout=5 -T git@bitbucket.org 2>&1', $output, $code);
-    if ($code <= 1) {
-      // 0 or 1 = SSH connected (Bitbucket always returns 1 on success).
-      $remote_url = "git@bitbucket.org:${target_project}.git";
-      $this->exec("git clone $remote_url $destination");
-    }
-    else {
-      $password = urlencode($this->getBitBucketPassword());
-      $remote_url = "https://x-token-auth:${password}@bitbucket.org/${target_project}.git";
-      $this->execWithRedaction("git clone {remote} $destination", ['remote' => $remote_url], ['remote' => $target_project]);
-    }
+    $password = urlencode($this->getBitBucketPassword());
+    $remote_url = "https://x-token-auth:${password}@bitbucket.org/${target_project}.git";
+    $this->execWithRedaction("git clone {remote} $destination", ['remote' => $remote_url], ['remote' => $target_project]);
   }
 
   public function closePullRequest($target_project, $id) {
